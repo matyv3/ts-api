@@ -1,4 +1,7 @@
 import { Router } from "express";
+import Container from "typedi";
+
+import AuthController from '../controllers/auth.controller';
 
 const route = Router();
 
@@ -10,6 +13,8 @@ const route = Router();
  */
 export default (app: Router) => {
     app.use('/auth', route);
-
-    route.get('/login', (req, res) => res.send('dasdsad'))
+    
+    const auth = Container.get(AuthController);
+    
+    route.post('/login', auth.login);
 }

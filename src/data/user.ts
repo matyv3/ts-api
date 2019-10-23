@@ -1,18 +1,10 @@
-
+import { UserModel } from '../models/user.model';
 
 export default class User{
 
-    constructor(
-        /**
-         * TODO: inyectar modelos
-         * ex:
-         * inject viene de typedi
-         * @Inject('userModel') private userModel : Models.UserModel,
-         */
-    ){}
+    constructor(){}
 
-    public findOne(id: string){
-
-        return id;
+    public static async findOne(params: any){
+        return await UserModel.findOne({...params});
     }
 }
