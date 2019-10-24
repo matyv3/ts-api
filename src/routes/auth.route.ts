@@ -13,6 +13,33 @@ export default (app: Router) => {
     
     const auth = Container.get(AuthController);
 
+    /**
+     * @swagger
+     * /login:
+     *   post:
+     *     summary: Login payload
+     *     tags:
+     *       - Auth
+     *     requestBody:
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               email:
+     *                 type: string
+     *               password:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         schema:
+     *           type: object
+     *           properties:
+     *             token:
+     *               type: string
+     *             status:
+     *               type: int
+     */
     route.post('/login', [
         check('email').isEmail(),
         check('password').exists()
