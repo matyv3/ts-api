@@ -1,20 +1,20 @@
-import { Router } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import Container from "typedi";
 
+import validate from '../middlewares/validation.middleware';
+
 import AuthController from '../controllers/auth.controller';
+import { check } from "express-validator";
 
 const route = Router();
 
-/**
- * TODO: 
- * aplicar middlewares 
- * aplicar loggers
- * ver si usar controladores que manejen el req, res
- */
 export default (app: Router) => {
     app.use('/auth', route);
     
     const auth = Container.get(AuthController);
-    
-    route.post('/login', auth.login);
+
+    route.post('/login', [
+        check('email').isEmail(),
+        check('password').exists()
+    ], validate, auth.login);
 }
