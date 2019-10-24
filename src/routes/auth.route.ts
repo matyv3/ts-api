@@ -21,15 +21,14 @@ export default (app: Router) => {
      *     tags:
      *       - Auth
      *     requestBody:
-     *       content:
-     *         application/json:
-     *           schema:
-     *             type: object
-     *             properties:
-     *               email:
-     *                 type: string
-     *               password:
-     *                 type: string
+     *          required: true
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          username:
+     *                              type: string
      *     responses:
      *       200:
      *         schema:
@@ -38,10 +37,13 @@ export default (app: Router) => {
      *             token:
      *               type: string
      *             status:
-     *               type: int
+     *               type: integer
      */
     route.post('/login', [
         check('email').isEmail(),
         check('password').exists()
     ], validate, auth.login);
+
+
+    route.post('/register', auth.register);
 }
