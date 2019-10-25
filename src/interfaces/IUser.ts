@@ -1,19 +1,19 @@
 export interface IUser{
-    _id: String;
-    name: String;
-    last_name: String;
-    email: String;
-    password: String;
+    _id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
 }
 
 export interface IUserLoginDTO{
-    email: String;
-    password: String;
+    email: string;
+    password: string;
 }
 
 export interface IUserRegisterDTO{
-    name: String;
-    last_name: String;
-    email: String;
-    password: String;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
 }

@@ -2,9 +2,10 @@ import { Service } from 'typedi'
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
-import { IUser } from '../interfaces/IUser';
+import { IUserRegisterDTO } from '../interfaces/IUser';
 import User from '../data/user';
 import HttpException from '../exceptions/HttpException';
+import { hashPassword } from '../utils/bcrypt';
 
 @Service()
 export default class UsersService {
@@ -18,7 +19,16 @@ export default class UsersService {
         return { token, status: 200 };
     }
 
-    public async register(){
-
+    public async register(userData: IUserRegisterDTO): Promise<{ msg: string, status: number }>{        
+        userData.password = await hashPassword(userData.password);
+        const exists = await User.exists({ email: userData.email })
+        if(exists) throw new HttpException( 409 ,'Email already registered');
+        try{
+            await User.create(userData);        
+            return { status:  201, msg: 'User Created' }
+        }catch(err){
+            throw new HttpException(500, 'Internal server error');
+        }
+            
     }
 }

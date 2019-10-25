@@ -15,27 +15,35 @@ export default (app: Router) => {
 
     /**
      * @swagger
-     * /login:
+     * /auth/login:
      *   post:
      *     summary: Login payload
      *     tags:
-     *       - Auth
-     *     requestBody:
-     *          required: true
-     *          content:
-     *              application/json:
-     *                  schema:
-     *                      type: object
-     *                      properties:
-     *                          username:
-     *                              type: string
+     *     - Auth
+     *     consumes:
+     *     - "application/json"
+     *     produces:
+     *     - "application/json"
+     *     parameters:
+     *     - in: "body"
+     *     name: "body"
+     *     schema:
+     *          type: "object"
+     *          required:
+     *          - "email"
+     *          - "password"
+     *          properties:
+     *              email:
+     *                  type: "string"
+     *              pasword:
+     *                  type: "string"
      *     responses:
      *       200:
      *         schema:
      *           type: object
      *           properties:
      *             token:
-     *               type: string
+     *               type: "string"
      *             status:
      *               type: integer
      */
@@ -45,5 +53,10 @@ export default (app: Router) => {
     ], validate, auth.login);
 
 
-    route.post('/register', auth.register);
+    route.post('/register', [
+        check('email').isEmail(),
+        check('password').exists(),
+        check('first_name').exists(),
+        check('last_name').exists()
+    ], validate, auth.register);
 }

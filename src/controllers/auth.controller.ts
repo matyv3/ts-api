@@ -19,6 +19,12 @@ export default class AuthController{
     }
 
     public async register(req: Request, res: Response){
-        
+        const userdata = req.body;
+        try{
+            const result = await usersService.register(userdata);
+            return res.status(201).json(result);
+        }catch(err){
+            return res.status(err.status).json({ status: err.status, error: err.message });
+        }
     }
 } 
