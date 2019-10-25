@@ -1,21 +1,16 @@
 import express, { Application, Request, Response, NextFunction  } from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import path from 'path';
+import morgan from 'morgan';
 
+import * as db from './config/database';
 import routes from './routes'
 
 const app: Application = express();
 
-// TODO: moverlo
-mongoose.connect('mongodb+srv://server:server@cluster0-c41h4.mongodb.net/test?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log('Database connected...'))
-.catch((err) => console.error('Database ERROR: ', err));
+db.connect();
 
 app.use(function(req: Request, res: Response, next: NextFunction) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -29,8 +24,8 @@ app.use(function(req: Request, res: Response, next: NextFunction) {
 });  
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false  }));
-
-app.use(routes())
+app.use(morgan('dev'));
+app.use(routes());
 
 
 const options = {
