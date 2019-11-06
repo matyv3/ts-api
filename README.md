@@ -1,31 +1,31 @@
 # REST API Boilerplate
 
-Simple REST API Boilerplate
+Simple REST API Boilerplate based on Layered Architecture pattern
 
 
-# Architecture
+# Presentation Layer
 
-Layer architecture
-
-*Route -> Controller -> Service -> Data -> Model* 
-
-## Route Layer
+## Routes
 
 Handles requests and applies middlewares
 Also sets swagger definitions
 
-## Controller Layer
+## Controllers
 
-Handles Requests and call service layer for bussines logic
+Handles Requests, responses and call service layer for bussines logic
 
-## Service Layer
+# Business Layer
+
+## Services
 
 Business logic
 
-## Data Layer
+# Data Access Layer
 
-Methods for data access
+## Data 
 
-## Model Layer
+Abastraction layer for access databases and resources.
+
+## Models
 
 Model and schemas definitions for MySQL, MongoDB, etc.

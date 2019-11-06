@@ -29,6 +29,5 @@ export default class UsersService {
         }catch(err){
             throw new HttpException(500, 'Internal server error');
         }
-            
     }
 }
